@@ -15,7 +15,7 @@ module EditorJs
       def initialize(raw)
         @raw = raw
         @content = cast_block_data_to_hash(raw.deep_dup)
-        sanitize!
+        # sanitize!
       end
 
       # Define JSON format of data
@@ -60,7 +60,7 @@ module EditorJs
       end
 
       def self.type
-        @type ||= self.to_s.underscore.split('/').last.gsub('_block', '')
+        @type ||= to_s.underscore.split('/').last.gsub('_block', '')
       end
 
       def self.inherited(parent)
@@ -101,10 +101,8 @@ module EditorJs
       end
 
       def html_decoder
-        @html_decoder ||= begin
-          with_customized_html_mappings do
-            HTMLEntities::Decoder.new('expanded')
-          end
+        @html_decoder ||= with_customized_html_mappings do
+          HTMLEntities::Decoder.new('expanded')
         end
       end
 
